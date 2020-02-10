@@ -6,13 +6,18 @@ export default class Navbar extends Component {
   render() {
     return(
       <nav>
-        <Link to="/">Join</Link>
         <ul>
           <li>
             <Link to="/chat">Chat</Link>
           </li>
           <li>
             <Link to="/blog">Blog</Link>
+          </li>
+          <li>
+            <Link to="/signUp">SignUp</Link>
+          </li>
+          <li>
+            <Link to="/signIn">SignIn</Link>
           </li>
         </ul>
       </nav>

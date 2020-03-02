@@ -2,7 +2,7 @@
 
 ## Rest API
 
-*status codes*
+*status codes
 
 - 1000
 - 1001

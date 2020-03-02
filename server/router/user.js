@@ -1,78 +1,57 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
-
-
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error' + err));
-});
-
-
+let sanitize = require('mongo-sanitize');
 
 router.route('/add').post((req, res) => {
-  const login = req.body.login;
-  const password = req.body.password;
-
-
   bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      const newUser = new User ({login, password: hash});
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      let user = new User({
+          email: sanitize(req.body.email),
+          password: hash
+      });
+      //Валидация. Проверяем в моделе, если ничего не возвращается то обрабатываем then
 
-      newUser.save()
-      .then(() => res.json('User add!'))
-      .catch((err) => res.status(400).json('Error' + err));
-
-      })
-    });
+      user.validate()
+        .then(()=> {
+          user.save()
+            .then(() =>  res.status(200).send({message: `Пользователь ${user.email} успешно зарегистрирован`}))
+            .catch((error) => {
+              if(error.code === 11000) {
+                res.status(400).send("Данный email уже занят, Упс!");
+              }
+            });
+          //Если возвращается ошибка на валидации, падает в кетч и выполняется кетч.
+          //в кетче можно создать объект в который сложить все ошибки и отправлять клиенту в ответ
+        })
+        .catch(error => {
+            res.json(error.errors['email'].message);
+        });
+    })
   });
-  //bcrypt code
-    // bcrypt.hash(password, null, null, (err, hash) => {
-
-    //   const newUser = new User ({username, password: hash});
-
-    //   newUser.save()
-    //   .then(user => {
-    //     console.log(user);
-    //     res.json({
-    //       ok: true,
-    //     })
-    //   })
-    // })
-
+});
 
 router.route('/login').post((req, res) => {
-  const login = req.body.login;
+  const email = req.body.email;
   const password = req.body.password;
 
-
-
   User.findOne({
-    login
+    email
   }).then((users) => {
-
-    if(!users) {
-      const fields = [];
-
-      res.json({
-        ok: false,
-      })
+    if (!users) {
+      res.status(400).send(console.log('User is not defined'));
     } else {
       bcrypt.compare(password, users.password, (err, result) => {
-        if(!result) {
-          res.json({
-            ok: false,
-            fields: ['password']
-          })
+        if (!result) {
+          res.status(400).send(error => {console.log(error)});
         } else {
-          console.log(users);
-
+          
           req.session.userId = users._id;
-          req.session.userLogin = users.login;
+          req.session.userLogin = users.email;
 
-          res.json({
-            ok: true,
+          res.status(200).json({
+            email: req.session.userLogin,
+            sessid: req.session.userId
           })
         }
       });

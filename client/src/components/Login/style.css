@@ -1,0 +1,144 @@
+.login__wrapper {
+  display: flex;
+}
+
+* {
+  transition: all 0.5s;
+}
+
+.login__wrapper .react-tabs {
+  margin-top: 15vw;
+}
+
+.react-tabs__tab {
+  color: #fff;
+}
+.react-tabs__tab {
+  width: 50%;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 0;
+  padding: 10px;
+}
+
+.react-tabs__tab-list {
+  margin: 0;
+}
+.react-tabs__tab--selected {
+  border: none;
+}
+
+.entry.react-tabs__tab--selected {
+  color: #fff;
+  background-color: #f46;
+}
+.registration.react-tabs__tab--selected {
+  color: #fff;
+  background-color: #46f;
+}
+
+.error {
+  border: 2px solid #f46;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 10px 0;
+  font-size: 14px;
+  max-width: 310px;
+}
+
+.success {
+  border: 2px solid #4f6;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 10px 0;
+  font-size: 14px;
+  max-width: 310px;
+}
+
+.form {
+  padding: 30px 45px 33px;
+  box-shadow: 0 0 0 1px rgba(21, 31, 42, 0.6);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.form .form__label {
+  font-size: 20px;
+  color: #fff;
+  min-width: 85px;
+}
+
+.form .form__input {
+  background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+    height: 20px;
+    color: #fff;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+input:-internal-autofill-selected {
+  background-color: transparent;
+}
+
+.form__title {
+  text-align: center;
+  color: #fff;
+}
+
+.form__group.submit {
+  justify-content: flex-end;
+}
+
+.form__input.submit {
+  text-align: center;
+  padding: 10px;
+  margin: 38px 0 10px 0;
+  font-size: 18px;
+  background-color: #efefef;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  color: #000;
+  text-transform: uppercase;
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.login__content {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}

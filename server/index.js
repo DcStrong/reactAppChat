@@ -28,6 +28,10 @@ app.use(
   })
 );
 
+
+
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -36,6 +40,9 @@ const dataBase = require("./databaseConnection");
 const userRouter = require("./router/user");
 
 app.use('/user', userRouter);
+
+
+
 
 
 io.on('connection', (socket) => {

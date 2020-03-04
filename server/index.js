@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const iosocket = require("socket.io");
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
+const socketRoute = require('./router/socketRoute');
 require("dotenv").config();
 
 const config = require("./config");
@@ -29,30 +29,15 @@ app.use(
 );
 
 
-
-
-
 app.use(cors());
 app.use(express.json());
 
 const dataBase = require("./databaseConnection");
 
 const userRouter = require("./router/user");
-
 app.use('/user', userRouter);
 
-
-
-
-
-io.on('connection', (socket) => {
-  console.log('We are new connection');
-
-  socket.on('disconnect', () => {
-    console.log('User had disconnect');
-  });
-});
-
+io.on('connection', socketRoute.onConnection);
 
 server.listen(PORT, () => {
   console.log(`Server has be started: ${PORT}`);

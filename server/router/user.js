@@ -32,6 +32,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/login').post((req, res) => {
+
   const email = req.body.email;
   const password = req.body.password;
 
@@ -45,7 +46,6 @@ router.route('/login').post((req, res) => {
         if (!result) {
           res.status(400).send(error => {console.log(error)});
         } else {
-          
           req.session.userId = users._id;
           req.session.userLogin = users.email;
 

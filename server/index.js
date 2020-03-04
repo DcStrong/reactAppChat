@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const http = require("http");
 const mongoose = require("mongoose");
-const iosocket = require("socket.io");
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -13,9 +12,11 @@ const config = require("./config");
 
 const app = express();
 const server = http.createServer(app);
+
+module.exports = server;
+
 const PORT = process.env.PORT || 5000;
 
-const io = iosocket(server);
 
 app.use(
   session({
@@ -30,29 +31,18 @@ app.use(
 
 
 
-
-
 app.use(cors());
 app.use(express.json());
 
 const dataBase = require("./databaseConnection");
-
 const userRouter = require("./router/user");
+const chatRouter = require("./router/chat");
+
 
 app.use('/user', userRouter);
+app.use('/chat', chatRouter);
 
-
-
-
-
-io.on('connection', (socket) => {
-  console.log('We are new connection');
-
-  socket.on('disconnect', () => {
-    console.log('User had disconnect');
-  });
-});
-
+const socket = require("./socket/index");
 
 server.listen(PORT, () => {
   console.log(`Server has be started: ${PORT}`);

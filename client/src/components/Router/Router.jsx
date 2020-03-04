@@ -15,9 +15,9 @@ export default class Router extends Component {
     return (
       <BrowserRouter>
         <Route exact path="*/">
-          {!this.props.user.isAuth ? <Redirect to="/login" /> : <Chat/>}
+          {!this.props.user.isAuth ? <Redirect to="/login" /> : <Route path="/" exact component={Blog}/>}
         </Route>
-        <Route path="/login" exact component={Login}/>
+        <Route path="/chat" exact component={Chat}/>
         <div>{this.props.user.email}</div>
       </BrowserRouter>
     )

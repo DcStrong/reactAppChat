@@ -9,6 +9,7 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
+
   console.log(3, action);
 
   if (action.type === AUTHORIZE) {

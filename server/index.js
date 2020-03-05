@@ -4,7 +4,8 @@ const http = require("http");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
+const socketio = require('socket.io');
+const socketRoute = require('./router/socketRoute');
 require("dotenv").config();
 
 const config = require("./config");
@@ -16,7 +17,7 @@ const server = http.createServer(app);
 module.exports = server;
 
 const PORT = process.env.PORT || 5000;
-
+const io = socketio(server);
 
 app.use(
   session({
@@ -30,19 +31,14 @@ app.use(
 );
 
 
-
 app.use(cors());
 app.use(express.json());
 
 const dataBase = require("./databaseConnection");
 const userRouter = require("./router/user");
-const chatRouter = require("./router/chat");
-
-
 app.use('/user', userRouter);
-app.use('/chat', chatRouter);
 
-const socket = require("./socket/index");
+io.on('connection', socketRoute.onConnection);
 
 server.listen(PORT, () => {
   console.log(`Server has be started: ${PORT}`);

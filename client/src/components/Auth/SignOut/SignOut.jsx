@@ -1,29 +1,25 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import * as actions from "../../../store/actions/index";
 
 
-export default class SignOut extends Component {
-  constructor(props) {
-    super(props);
+const SignOut = () => {
+  const [login] = useState("");
+  const [sessid] = useState("");
+  const dispatch = useDispatch();
+  const setAuth = payload => dispatch(actions.outAuthorize(payload));
 
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
+  function onClick() {
     const user = {
-      login: '',
-      isAuth: '',
-      sessid: ''
+      login,
+      sessid
     }
-
-      this.props.auth({
-        isAuth: false,
-        ...user
-      });
+    setAuth(user);
   }
 
-  render() {
-    return (
-      <button onClick={this.onClick} type="button">Выход</button>
-    )
-  }
+
+return (
+  <button onClick={onClick} type="button">Выход</button>
+)
 }
+export default SignOut;

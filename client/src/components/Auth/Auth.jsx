@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SignIn from './SignIn/SingIn';
 import SignUp from './SignUp/SingUp';
-import SignOut from './SignOut/SignOutContainer';
+import SignOut from './SignOut/SignOut';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './style.css';
@@ -9,7 +9,7 @@ import logo from '../../logo.svg';
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
-  user: state.user.isAuth
+  user: state.user.email
 });
 
 class Login extends Component {

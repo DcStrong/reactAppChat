@@ -1,6 +1,6 @@
 import Auth from "../Auth/Auth"
 import NotFoundPage from "../notFound";
-import Chat from "../Chat";
+import Chat from "../Chat/Chat";
 import Blog from "../Blog";
 
 import React, { Component } from 'react';

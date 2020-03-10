@@ -10,6 +10,11 @@ body {
 
 * {
   transition: 0.5s;
+
+}
+
+h2, li {
+  color: #fff;
 }
 
 

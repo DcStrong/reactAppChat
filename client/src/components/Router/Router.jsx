@@ -4,7 +4,7 @@ import Chat from "../Chat/Chat";
 import Blog from "../Blog";
 
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Link, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 
 export default class Router extends Component {

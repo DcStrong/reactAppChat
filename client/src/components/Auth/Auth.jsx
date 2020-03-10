@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SignIn from './SignIn/SingIn';
-import SignUp from './SignUp/SingUp';
-import SignOut from './SignOut/SignOut';
+import SignIn from './SingIn';
+import SignUp from './SingUp';
+import SignOut from './SignOut';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './style.css';

@@ -18,7 +18,7 @@ module.exports = server;
 
 const PORT = process.env.PORT || 5000;
 const io = socketio(server);
-
+module.exports = io;
 app.use(
   session({
     secret: config.SESSION_SECRET,
@@ -38,7 +38,22 @@ const dataBase = require("./databaseConnection");
 const userRouter = require("./router/user");
 app.use('/user', userRouter);
 
-io.on('connection', socketRoute.onConnection);
+// io.on('connection', socketRoute.onConnection);
+
+io.on('connection', (socket) => {
+  console.log('We are new connection');
+
+  socket.on('sendMessage', (message, callback) => {
+    io.emit('message', { text: message });
+    console.log(message)
+    callback();
+  });
+
+
+  socket.on('disconnect', () => {
+    console.log('User had disconnect');
+  });
+});
 
 server.listen(PORT, () => {
   console.log(`Server has be started: ${PORT}`);

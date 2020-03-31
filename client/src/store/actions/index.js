@@ -1,4 +1,4 @@
-import { AUTHORIZE, OUT_AUTHORIZE, MESSAGE } from "../action-types";
+import { AUTHORIZE, OUT_AUTHORIZE, MESSAGE, MESSAGES } from "../action-types";
 
 export function authorize(payload) {
   return { type: AUTHORIZE, payload };
@@ -10,4 +10,8 @@ export function outAuthorize(payload) {
 
 export function message(payload) {
   return {type: MESSAGE, payload}
+}
+
+export function messages(payload) {
+  return {type: MESSAGES, payload}
 }

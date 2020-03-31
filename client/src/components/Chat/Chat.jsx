@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import io from "socket.io-client";
+import * as actions from "../../store/actions/index";
 
 import Messages from './Messages/Messages';
 import Input from './Input/Input';
@@ -13,13 +15,21 @@ let socket;
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [name, setName] = useState('');
+
   const ENDPOINT = "localhost:5000";
-  socket = io(ENDPOINT);
+
+  const dispatch = useDispatch();
+  const store = useSelector(state => state);
+  const addMessages = payload => dispatch(actions.message(payload));
   
   //Получаем текущее состояние элемента, каждый раз когда рендериться приложение. Принимаем событие с сервера
   // Принимаем один аргумент message.
   useEffect(() => {
+    socket = io(ENDPOINT);
+    setName(store.user.email);
     socket.on('message', (message) => {
+      addMessages([...messages, message]);
       setMessages([...messages, message ]);
     });
   })
@@ -31,7 +41,8 @@ const Chat = () => {
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+      // addMessages(message, () => setMessage(''));
+      socket.emit('sendMessage', message, () => setMessage(''))
     }
   }
 
@@ -40,7 +51,7 @@ const Chat = () => {
   return (
     <div className="outerContainer">
       <div className="container">
-          <Messages messages={messages}/>
+          <Messages messages={messages} name={name}/>
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>

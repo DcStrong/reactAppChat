@@ -1,16 +1,16 @@
-import { AUTHORIZE, OUT_AUTHORIZE } from "../action-types";
+import { AUTHORIZE, OUT_AUTHORIZE, MESSAGE, MESSAGES } from "../action-types";
 
 const initialState = {
   user: {
     email: localStorage.getItem('email'),
-    isAuth: localStorage.getItem('isAuth'),
+    sessid: localStorage.getItem('sessid'),
+  },
+  message: {
+    title: null,
   }
 };
 
-
 function rootReducer(state = initialState, action) {
-
-  console.log(3, action);
 
   if (action.type === OUT_AUTHORIZE) {
 
@@ -22,7 +22,7 @@ function rootReducer(state = initialState, action) {
         email: '',
         sessid: ''
       }
-    })
+    });
   }
 
   if (action.type === AUTHORIZE) {
@@ -39,7 +39,13 @@ function rootReducer(state = initialState, action) {
       }
     });
   }
+
+  if (action.type === MESSAGE) {
+    // console.log(action.payload);
+  }
+
   return state;
 }
+
 
 export default rootReducer;

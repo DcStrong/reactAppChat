@@ -4,15 +4,15 @@ import * as actions from "../../store/actions/index";
 
 
 const SignOut = () => {
-  const [login] = useState("");
-  const [sessid] = useState("");
+  const [email] = useState("");
+  const [token] = useState("");
   const dispatch = useDispatch();
   const setAuth = payload => dispatch(actions.outAuthorize(payload));
 
   function onClick() {
     const user = {
-      login,
-      sessid
+      email,
+      token
     }
     setAuth(user);
   }

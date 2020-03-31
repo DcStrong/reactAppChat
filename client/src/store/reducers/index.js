@@ -3,39 +3,43 @@ import { AUTHORIZE, OUT_AUTHORIZE } from "../action-types";
 const initialState = {
   user: {
     email: localStorage.getItem('email'),
-    isAuth: localStorage.getItem('isAuth'),
+    token: localStorage.getItem('token'),
+  },
+
+  message: {
+    mess: null,
+    source: false,
+    userAvatar: '',
+    date: '',
   }
 };
 
 
 function rootReducer(state = initialState, action) {
-
-  console.log(3, action);
-
+  console.log(state.user)
   if (action.type === OUT_AUTHORIZE) {
 
     localStorage.removeItem('email');
-    localStorage.removeItem('sessid');
+    localStorage.removeItem('token');
 
     return Object.assign({}, state, {
       user: {
         email: '',
-        sessid: ''
+        token: ''
       }
     })
   }
 
   if (action.type === AUTHORIZE) {
     let email = action.payload.email
-    let sessid = action.payload.sessid
+    let token = action.payload.token
 
     localStorage.setItem('email', email);
-    localStorage.setItem('sessid', sessid);
-
+    localStorage.setItem('token', token);
     return Object.assign({}, state, {
       user: {
         email,
-        sessid
+        token,
       }
     });
   }

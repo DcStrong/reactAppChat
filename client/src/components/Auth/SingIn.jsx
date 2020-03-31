@@ -25,7 +25,11 @@ import * as actions from "../../store/actions/index";
       .post("http://localhost:5000/user/login", user)
       .then(res => {
         if (res.status === 200) {
-          setAuth(res.data);
+          let userSessid = {
+            email,
+            token: res.data,
+          }
+          setAuth(userSessid);
           // document.location.href = '/';
         }
       })

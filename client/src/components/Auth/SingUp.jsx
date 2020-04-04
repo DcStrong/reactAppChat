@@ -84,7 +84,7 @@ export default class Join extends Component {
             <div className={this.state.messageStatus}>{this.state.message}</div>
           }
         </div>
-        <form onSubmit={this.onSubmit} onClick={this.onChangeError} className="form form-registration">
+        <form onSubmit={this.onSubmit} className="form form-registration">
           <div className="form__group">
             <label className="form__label">Email: </label>
             <input  type="email"

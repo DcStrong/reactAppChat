@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import * as actions from "../../store/actions/index";
 
@@ -10,7 +10,7 @@ import * as actions from "../../store/actions/index";
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const store = useSelector(state => state.user.email);
+  // const store = useSelector(state => state.user.email);
   const setAuth = payload => dispatch(actions.authorize(payload));
 
   function onSubmit(e) {
@@ -25,7 +25,11 @@ import * as actions from "../../store/actions/index";
       .post("http://localhost:5000/user/login", user)
       .then(res => {
         if (res.status === 200) {
-          setAuth(res.data);
+          let userSessid = {
+            email,
+            token: res.data.token,
+          }
+          setAuth(userSessid);
           // document.location.href = '/';
         }
       })

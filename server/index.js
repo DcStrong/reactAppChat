@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const http = require("http");
-const mongoose = require("mongoose");
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+// const expressSession = require('express-session');
+// const SessionStore = require('express-session-sequelize')(expressSession.Store);
+// const db = require('./databaseConnection');
 const socketio = require('socket.io');
 const socketRoute = require('./router/socketRoute');
 require("dotenv").config();
@@ -18,42 +18,45 @@ module.exports = server;
 
 const PORT = process.env.PORT || 5000;
 const io = socketio(server);
+
 module.exports = io;
-app.use(
-  session({
-    secret: config.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection
-    })
-  })
-);
+
+
+// const sequelizeSessionStore = new SessionStore({
+//   db: db.sequelize,
+// });
+
+// app.use(expressSession({
+//  secret: config.SESSION_SECRET,
+//  resave: false, saveUninitialized: false,
+//  store: sequelizeSessionStore
+// }));
+
+
+
+
+// app.use(
+//   session({
+//     secret: config.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: false,
+//     store: new MongoStore({
+//       mongooseConnection: mongoose.connection
+//     })
+//   })
+// );
 
 
 app.use(cors());
 app.use(express.json());
 
-const dataBase = require("./databaseConnection");
 const userRouter = require("./router/user");
+const chatRooms = require("./router/chatRoom");
+
 app.use('/user', userRouter);
+app.use('/chatRoom', chatRooms);
 
-// io.on('connection', socketRoute.onConnection);
-
-io.on('connection', (socket) => {
-  console.log('We are new connection');
-
-  socket.on('sendMessage', (message, callback) => {
-    io.emit('message', { text: message });
-    console.log(message)
-    callback();
-  });
-
-
-  socket.on('disconnect', () => {
-    console.log('User had disconnect');
-  });
-});
+io.on('connection', socketRoute.onConnection.bind(io));
 
 server.listen(PORT, () => {
   console.log(`Server has be started: ${PORT}`);

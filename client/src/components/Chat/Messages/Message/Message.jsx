@@ -4,16 +4,33 @@ import ReactEmoji from 'react-emoji';
 
 import "./Message.css";
 
-const Message = ({ message: { text }, name}) => {
+const Message = ({ message: { message, name }, user }) => {
+  let userVerification = false;
+  const trimmedName = name.trim().toLowerCase();
+
+  if(user === trimmedName) {
+    userVerification = true;
+  }
 
 
-  return (
+    return (
+      userVerification
+      ? (
         <div className="messageContainer justifyEnd">
+          <p className="sentText pr-10">{trimmedName}</p>
           <div className="messageBox backgroundBlue">
-            <p>{name}</p>
-            <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
+            <p className="messageText colorWhite">{ReactEmoji.emojify(message)}</p>
           </div>
         </div>
+        )
+        : (
+          <div className="messageContainer justifyStart">
+            <div className="messageBox backgroundLight">
+              <p className="messageText colorDark">{ReactEmoji.emojify(message)}</p>
+            </div>
+            <p className="sentText pl-10 ">{trimmedName}</p>
+          </div>
+        )
   );
 }
 

@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 let sanitize = require('mongo-sanitize');
 const config = require("../config");
 
-
 router.route('/searchRoom').post((req, res) => {
   ChatRoom.findAll()
   .then(rooms => {

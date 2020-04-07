@@ -5,10 +5,10 @@ const db = {}
 const sequelize = new Sequelize(
   'reactchat',
   'root',
-  'root',
+  '',
   {
     host: 'localhost',
-    port: '8889',
+    // port: '8889',
     dialect: 'mysql',
     operatorAliases: false,
     pool: {

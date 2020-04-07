@@ -1,19 +1,17 @@
 import React from "react";
-import Buttons from "./Buttons/ButtonsNavigation/ButtonsNavigation"
-import Chat from "../Chat/Chat";
-import ButtonAuth from "./Buttons/ButtonsAuth/ButtonsAuth"
-import './Blog.css';
-// import Rooms from "./chatRooms/chatRooms";
-
 import { useSelector } from 'react-redux';
 
+import Rooms from './chatRooms/chatRooms';
+import Buttons from "./Buttons/ButtonsNavigation/ButtonsNavigation"
+import Chat from "../Chat/Chat";
+import ButtonAuth from "./Buttons/ButtonsAuth/ButtonsAuth";
+import './Blog.css';
 
 
 const Blog = () => {
 
   const store = useSelector(state => state.user.email);
 
-  console.log(store);
 
   return (
       <div className="main-container">
@@ -40,10 +38,7 @@ const Blog = () => {
                 <li className="private__chat_item">DcStrong</li>
               </ul>
             </div>
-            <ul className="rooms__list">
-              <li className="room__item">Design chat</li>
-              <li className="room__item">Games chat</li>
-            </ul>
+            <Rooms/>
           </div>
         </div>
         : <ButtonAuth/>}

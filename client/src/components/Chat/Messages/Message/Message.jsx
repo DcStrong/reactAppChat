@@ -5,6 +5,7 @@ import ReactEmoji from 'react-emoji';
 import "./Message.css";
 
 const Message = ({ message: { message, name }, user }) => {
+  
   let userVerification = false;
   const trimmedName = name.trim().toLowerCase();
 

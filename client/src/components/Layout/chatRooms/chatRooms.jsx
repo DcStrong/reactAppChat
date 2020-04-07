@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const useChatRoom = () => {
 
@@ -7,40 +8,31 @@ const useChatRoom = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [error, setError] = useState('');
 
-
-console.log(isLoaded);
   useEffect(() => {
-
     axios.post('http://localhost:5000/chatRoom/searchRoom')
-    .then(
-      (result) => {
+    .then((result) => {
         setLoaded(true);
-        // setRooms([...rooms, result])
-        console.log(result.data);
-      },
-      // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-      // чтобы не перехватывать исключения из ошибок в самих компонентах.
-      (error) => {
-        console.log(error);
-      }
-    )
-  });
+        setRooms(result.data);
+      })
+    .catch(err => setError(err))
+  }, []);
 
-
+  console.log(rooms)
   if (error) {
     return <div>Ошибка: {error}</div>;
   } else if (!isLoaded) {
     return <div>Загрузка...</div>;
   } else {
     return (
-      // <ul>
-      //   {items.map(item => (
-      //     <li key={item.name}>
-      //       {item.name} {item.price}
-      //     </li>
-      //   ))}
-      // </ul>
-      <div></div>
+      <ul>
+        {rooms.map(item => (
+          <li key={item.id}>
+            <Link onClick={e => (!item) ? e.preventDefault() : null} to={`/blog?room=${item.title}`}>
+              <button className={'button mt-20'} type="submit">{item.title}</button>
+            </Link>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
